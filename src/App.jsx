@@ -5,14 +5,8 @@ import AdminPage from "./component/AdminPage"
 export const router = createBrowserRouter([
     {
         path : "/",
-        element : <Dashboard />,
-        // children : [
-        //   {
-        //     path : "/",
-        //     element : <AdminPage />
-        //   }
-        // ]
-    }
+        element : <Dashboard />
+      }
 ])
 
 const App = () => {

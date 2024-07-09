@@ -3,7 +3,7 @@ import { useFormik } from "formik"
 import {LibraryContext} from './Dashboard'
 import { useContext } from "react"
 const BooksSection = () => {
-    const {bookList,isEdit, setTitle, setIsbn, setAuthor, setPublishDdate,
+    const {bookList,isBookEdit, setIsBookEdit, setTitle, setIsbn, setAuthor, setPublishDdate,
         addNewBook
     } = useContext(LibraryContext)
 
@@ -43,22 +43,40 @@ const BooksSection = () => {
         validate, // validate function
         onSubmit: values => {
           console.log(values);
-
         addNewBook(values)
-
         //Resetting to Blank values in Form
         book_formik.resetForm()
         }
       });
 
-    let i = 1;
+    let bookIndex = 1;
 
+    function loadBookButtons() {
+    if(!isBookEdit){
+        return(
+            <div>
+            <button className='btn btn-success' style={{margin:"10px"}}>Add Book</button>
+            <button className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
+                Update Book</button>
+            </div>
+        )
+    }
+    else{
+        return(
+            <div>
+            <button className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
+                Add Book</button>
+            <button className='btn btn-success' style={{margin:"10px"}}>Update Book</button>
+            </div>
+        )
+    }
+    }
     return (
         <div>
             <div className="row">
             <div className="col-md-6" style={{ height: "500px", width: "50%", overflowX: "auto" }} >
             {/* */}
-            <div className="row" key={i++}>
+            <div className="row" key={bookIndex++}>
                 {bookList.map(book => {
                     return (
                         <div className="card" style={{ width: "18rem" }} key={book.isbn}>
@@ -122,8 +140,9 @@ const BooksSection = () => {
                     </div>
                     {book_formik.touched.publish && book_formik.errors.publish ? <div style={style}>{book_formik.errors.publish}</div> : null}
                     <br />
-                    <button type="submit" className="btn btn-primary">Submit</button>&emsp;
-                    <button type="button" className="btn btn-primary" disabled={!isEdit ? true : false }>Update</button>
+                    {loadBookButtons()}
+                    {/* <button type="submit" className="btn btn-primary">Submit</button>&emsp;
+                    <button type="button" className="btn btn-primary" disabled={!isEdit ? true : false }>Update</button> */}
                 </form>
             </div>
             </div>

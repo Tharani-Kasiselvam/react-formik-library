@@ -17,7 +17,8 @@ const Dashboard = () => {
     const [dob,setDob] = useState("")
     const [bio,setBio] = useState("")
 
-    const [isEdit,setIsEdit] = useState(false)
+    const [isBookEdit,setIsBookEdit] = useState(false)
+    const [isAuthEdit,setIsAuthEdit] = useState(false)
     const [bookList,setBookList] = useState([
         {
             "title": "Cue the Sun!",
@@ -40,7 +41,7 @@ const Dashboard = () => {
     ]
     )
 
-    const author_records = [
+    const [authorList,setAuthorList] = useState([
         {
             "name": "Adam Moss",
             "id": "AUT001",
@@ -54,7 +55,7 @@ const Dashboard = () => {
             "dob": "3-APR-1962",
             "bio": "Emily Nussbaum is an American television critic. She served as the television critic for The New Yorker from 2011 until 2019. In 2016, she won the Pulitzer Prize for Criticism."
         }
-    ]
+    ])
 
     const addNewBook = (values) => {
        const newBook = {
@@ -67,10 +68,22 @@ const Dashboard = () => {
        setBookList([...bookList,newBook])
     }
 
+    const addNewAuthor = (values) => {
+        const newAuthor = {
+            name : values.name,
+            id : values.authId,
+            dob : values.dob,
+            bio : values.bio
+       }
+       
+       setAuthorList([...authorList,newAuthor])
+    }
+
     return (
         <div>
-            <LibraryContext.Provider value={{bookList, author_records, isEdit, 
-                setTitle, setIsbn, setAuthor, setPublishDdate, addNewBook
+            <LibraryContext.Provider value={{bookList, authorList, isBookEdit, setIsBookEdit, isAuthEdit,setIsAuthEdit,
+                setTitle, setIsbn, setAuthor, setPublishDdate, setName, setAuthId, setDob, setBio,
+                addNewBook, addNewAuthor
             }}>
             <nav className="navbar navbar-light bg-light">
                 <div className="navbar-brand" to="#" >
