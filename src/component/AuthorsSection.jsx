@@ -1,22 +1,9 @@
 import { useFormik } from "formik"
+import {LibraryContext} from './Dashboard'
+import { useContext } from "react"
 
 const AuthorsSection = () => {
-
-    const author_records = [
-        {
-            "name": "Adam Moss",
-            "id": "AUT001",
-            "dob": "20-FEB-1966",
-            "bio": "Adam Moss is an American magazine and newspaper editor. From 2004 to 2019, he was the editor-in-chief of New York magazine. Under his editorship, New York was repeatedly recognized for excellence, notably winning Magazine of the Year in 2013, and General Excellence both in print and online in 2010."
-
-        },
-        {
-            "name": "Emily Nussbaum",
-            "id": "AUT002",
-            "dob": "3-APR-1962",
-            "bio": "Emily Nussbaum is an American television critic. She served as the television critic for The New Yorker from 2011 until 2019. In 2016, she won the Pulitzer Prize for Criticism."
-        }
-    ]
+    const {author_records} = useContext(LibraryContext)
 
     const validate = values => {
         const errors = {};
@@ -60,7 +47,7 @@ const AuthorsSection = () => {
     return (
         <div>
             <div className="row">
-                <div className="col-md-6" style={{ height: "50%", width: "70%" }}>
+                <div className="col-md-6" style={{ height: "500px", width: "50%", overflowY:"auto"}}>
                     {author_records.map(author => {
                         return (
                             <div className="card" style={{ width: "18rem" }} key={author.id}>
@@ -77,7 +64,7 @@ const AuthorsSection = () => {
                     })
                     }
                 </div>
-                <div className="col-md-6" style={{ width: "30%" }}>
+                <div className="col-md-6" style={{ width: "50%" }}>
                     AUTHOR
                     <form onSubmit={author_formik.handleSubmit} >
                         {/* onSubmit={author_formik.handleSubmit} */}

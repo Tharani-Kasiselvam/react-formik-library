@@ -1,27 +1,9 @@
 
 import { useFormik } from "formik"
-
+import {LibraryContext} from './Dashboard'
+import { useContext } from "react"
 const BooksSection = () => {
-    const book_records = [
-        {
-            "title": "Cue the Sun!",
-            "isbn": 5001,
-            "author": "Emily Nussbaum",
-            "publish_date": "2023-04-08",
-        },
-        {
-            "title": "The Work of Art",
-            "isbn": 5002,
-            "author": "Adam Moss",
-            "publish_date": "2022-02-08",
-        },
-        {
-            "title": "The Coast Road",
-            "isbn": 5003,
-            "author": "Alan Murrin",
-            "publish_date": "2024-03-08",
-        }
-    ]
+    const {book_records,isEdit} = useContext(LibraryContext)
 
     const validate = values => {
         const errors = {};
@@ -66,7 +48,9 @@ const BooksSection = () => {
     return (
         <div>
             <div className="row">
-            <div className="col-md-6" style={{ height: "50%", width: "70%" }}>
+            <div className="col-md-6" style={{ height: "500px", width: "50%", overflowX: "auto" }} >
+            {/* */}
+            <div className="row">
                 {book_records.map(book => {
                     return (
                         <div className="card" style={{ width: "18rem" }} key={book.isbn}>
@@ -81,9 +65,9 @@ const BooksSection = () => {
                     )
                 })
                 }
-
+                </div>
             </div>
-            <div className="col-md-6" style={{ width: "30%" }}>BOOKS
+            <div className="col-md-6" style={{ width: "50%" }}>BOOKS
                 <form onSubmit={book_formik.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="title_lbl">Book Title</label>
@@ -125,7 +109,8 @@ const BooksSection = () => {
                     </div>
                     {book_formik.touched.publish && book_formik.errors.publish ? <div style={style}>{book_formik.errors.publish}</div> : null}
                     <br />
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Submit</button>&emsp;
+                    <button type="button" className="btn btn-primary" disabled={!isEdit ? true : false }>Update</button>
                 </form>
             </div>
             </div>
