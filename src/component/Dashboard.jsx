@@ -18,9 +18,7 @@ const Dashboard = () => {
     const [bio,setBio] = useState("")
 
     const [isEdit,setIsEdit] = useState(false)
-
-
-const book_records = [
+    const [bookList,setBookList] = useState([
         {
             "title": "Cue the Sun!",
             "isbn": 5001,
@@ -40,6 +38,7 @@ const book_records = [
             "publish_date": "2024-03-08",
         }
     ]
+    )
 
     const author_records = [
         {
@@ -57,13 +56,22 @@ const book_records = [
         }
     ]
 
-    const addNewBook = () => {
-            
+    const addNewBook = (values) => {
+       const newBook = {
+            title : values.title,
+            isbn : values.isbn,
+            author : values.author,
+            publish_date : values.publishDate
+       }
+       
+       setBookList([...bookList,newBook])
     }
 
     return (
         <div>
-            <LibraryContext.Provider value={{book_records, author_records, isEdit}}>
+            <LibraryContext.Provider value={{bookList, author_records, isEdit, 
+                setTitle, setIsbn, setAuthor, setPublishDdate, addNewBook
+            }}>
             <nav className="navbar navbar-light bg-light">
                 <div className="navbar-brand" to="#" >
                     <img src="../book.png"

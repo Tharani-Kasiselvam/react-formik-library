@@ -3,7 +3,9 @@ import { useFormik } from "formik"
 import {LibraryContext} from './Dashboard'
 import { useContext } from "react"
 const BooksSection = () => {
-    const {book_records,isEdit} = useContext(LibraryContext)
+    const {bookList,isEdit, setTitle, setIsbn, setAuthor, setPublishDdate,
+        addNewBook
+    } = useContext(LibraryContext)
 
     const validate = values => {
         const errors = {};
@@ -31,7 +33,7 @@ const BooksSection = () => {
         fontweight : "italic"
       }
 
-    const book_formik = useFormik({
+     const book_formik = useFormik({
         initialValues: {
           title: '',
           isbn: '',
@@ -41,23 +43,36 @@ const BooksSection = () => {
         validate, // validate function
         onSubmit: values => {
           console.log(values);
+        //   setTitle(values.title)
+        //   setIsbn(values.isbn)
+        //   setAuthor(values.author)
+
+        addNewBook(values)
+
+        //Resetting to Blank values in Form
+        setTitle("")
+        setIsbn("")
+        setAuthor("")
+        setPublishDdate("")
         }
       });
 
+    let i = 1;
 
     return (
         <div>
             <div className="row">
             <div className="col-md-6" style={{ height: "500px", width: "50%", overflowX: "auto" }} >
             {/* */}
-            <div className="row">
-                {book_records.map(book => {
+            <div className="row" key={i++}>
+                {bookList.map(book => {
                     return (
                         <div className="card" style={{ width: "18rem" }} key={book.isbn}>
                             <div className="card-body">
                                 <h5 className="card-title">{book.title}</h5>
                                 <h6 className="card-subtitle mb-2 text-muted">By {book.author}</h6>
                                 <p className="card-text">ISBN# {book.isbn}</p>
+                                <p className="card-subtitle mb-2 text-muted">Publish Date: {book.publish_date}</p>
                                 <a href="#" className="card-link">Edit</a>
                                 <a href="#" className="card-link">Delete</a>
                             </div>
@@ -73,9 +88,10 @@ const BooksSection = () => {
                         <label htmlFor="title_lbl">Book Title</label>
                         <input type="text" className="form-control" placeholder="Enter book Title"
                             id="title"
-                            value={book_formik.values.title}
-                            onChange={book_formik.handleChange}
-                            onBlur={book_formik.handleBlur} />
+                            // value={book_formik.values.title}
+                            // onChange={book_formik.handleChange}
+                            // onBlur={book_formik.handleBlur} 
+                            {...book_formik.getFieldProps('title')}/>
                     </div>
                     {book_formik.touched.title && book_formik.errors.title ? <div style={style}>{book_formik.errors.title}</div> : null}
                     <br />
@@ -83,9 +99,10 @@ const BooksSection = () => {
                         <label htmlFor="author_lbl">Author</label>
                         <input type="text" className="form-control" placeholder="Enter book Author"
                             id="author"
-                            value={book_formik.values.author}
-                            onChange={book_formik.handleChange}
-                            onBlur={book_formik.handleBlur} />
+                            // value={book_formik.values.author}
+                            // onChange={book_formik.handleChange}
+                            // onBlur={book_formik.handleBlur}
+                            {...book_formik.getFieldProps('author')}/>
                     </div>
                     {book_formik.touched.isbn && book_formik.errors.isbn ? <div style={style}>{book_formik.errors.author}</div> : null}
                     <br />
@@ -93,9 +110,10 @@ const BooksSection = () => {
                         <label htmlFor="isbn_lbl">ISBN Number</label>
                         <input type="text" className="form-control" placeholder="Enter book ISBN num"
                             id="isbn"
-                            value={book_formik.values.isbn}
-                            onChange={book_formik.handleChange}
-                            onBlur={book_formik.handleBlur} />
+                            // value={book_formik.values.isbn}
+                            // onChange={book_formik.handleChange}
+                            // onBlur={book_formik.handleBlur}
+                            {...book_formik.getFieldProps('isbn')}/>
                     </div>
                     {book_formik.touched.isbn && book_formik.errors.isbn ? <div style={style}>{book_formik.errors.isbn}</div> : null}
                     <br />
@@ -103,9 +121,10 @@ const BooksSection = () => {
                         <label htmlFor="publish_lbl">Publish Date</label>
                         <input type="text" className="form-control" placeholder="Enter Published date"
                             id="publish"
-                            value={book_formik.values.publish}
-                            onChange={book_formik.handleChange}
-                            onBlur={book_formik.handleBlur} />
+                            // value={book_formik.values.publish}
+                            // onChange={book_formik.handleChange}
+                            // onBlur={book_formik.handleBlur} 
+                            {...book_formik.getFieldProps('publish')}/>
                     </div>
                     {book_formik.touched.publish && book_formik.errors.publish ? <div style={style}>{book_formik.errors.publish}</div> : null}
                     <br />
