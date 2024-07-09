@@ -43,17 +43,11 @@ const BooksSection = () => {
         validate, // validate function
         onSubmit: values => {
           console.log(values);
-        //   setTitle(values.title)
-        //   setIsbn(values.isbn)
-        //   setAuthor(values.author)
 
         addNewBook(values)
 
         //Resetting to Blank values in Form
-        setTitle("")
-        setIsbn("")
-        setAuthor("")
-        setPublishDdate("")
+        book_formik.resetForm()
         }
       });
 
