@@ -150,7 +150,7 @@ const AuthorsSection = () => {
                         <br />
                         <div className="form-group">
                             <label htmlFor="dob_lbl">Date Of Birth</label>
-                            <input type="text" className="form-control" placeholder="DD-MM-YYYY"
+                            <input type="date" className="form-control"
                                 id="dob"
                                 // value={author_formik.values.dob}
                                 // onChange={author_formik.handleChange}

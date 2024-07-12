@@ -39,14 +39,14 @@ const Dashboard = () => {
             "title": "The Work of Art",
             "isbn": 5002,
             "author": "Adam Moss",
-            "publish_date": "2022-02-08",
+            "publish_date": "2022-02-28",
         },
         {
             "bookId" : Bindex++,
             "title": "The Coast Road",
             "isbn": 5003,
             "author": "Alan Murrin",
-            "publish_date": "2024-03-08",
+            "publish_date": "2024-03-01",
         }
     ]
     )
@@ -57,14 +57,14 @@ const Dashboard = () => {
             "authorId" : Aindex++,
             "name": "Adam Moss",
             "id": "AUT001",
-            "dob": "20-FEB-1966",
+            "dob": "1966-02-22",
             "bio": "Adam Moss is an American magazine and newspaper editor. From 2004 to 2019, he was the editor-in-chief of New York magazine. Under his editorship, New York was repeatedly recognized for excellence, notably winning Magazine of the Year in 2013, and General Excellence both in print and online in 2010."
         },
         {
             "authorId" : Aindex++,
             "name": "Emily Nussbaum",
             "id": "AUT002",
-            "dob": "3-APR-1962",
+            "dob": "1962-04-15",
             "bio": "Emily Nussbaum is an American television critic. She served as the television critic for The New Yorker from 2011 until 2019. In 2016, she won the Pulitzer Prize for Criticism."
         }
     ])
@@ -103,12 +103,12 @@ const Dashboard = () => {
         console.log("---Edited Booklist-ID---",values.bookId)
         const editedBookList = bookList.map(book=>{
             if(values.bookId == book.bookId){
-                 console.log("---Edited Booklist IF Condn--")
+                 console.log("---Edited Booklist IF Condn--", book.publish_date,"---",values.publish)
                 return {...book, 
                     title : (book.title == values.title) ? book.title : values.title ,
                     isbn : (book.isbn == values.isbn) ? book.isbn : values.isbn ,
                     author : (book.author == values.author) ? book.author : values.author ,
-                    publish : (book.publish == values.publish) ? book.publish : values.publish ,
+                    publish_date : (book.publish_date == values.publish) ? book.publish_date : values.publish
                 }
             }
             return book

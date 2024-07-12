@@ -163,7 +163,7 @@ const BooksSection = () => {
                     <br />
                     <div className="form-group">
                         <label htmlFor="publish_lbl">Publish Date</label>
-                        <input type="text" className="form-control" placeholder="DD-MM-YYYY"
+                        <input type="date" className="form-control"
                             id="publish"
                             // value={book_formik.values.publish}
                             // onChange={book_formik.handleChange}
