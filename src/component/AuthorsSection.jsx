@@ -4,7 +4,7 @@ import { useContext } from "react"
 
 const AuthorsSection = () => {
     const {authorList,isAuthEdit,setIsAuthEdit,
-        addNewAuthor, updateAuthor
+        addNewAuthor, updateAuthor, loadPostDelAuthor
     } = useContext(LibraryContext)
 
     const validate = values => {
@@ -102,6 +102,18 @@ const AuthorsSection = () => {
         author_formik.setFieldValue("bio",selectedAuthor[0].bio)
     }
 
+    const deleteAuthor = (e) => {
+        console.log(e.target.id)
+        const selectedAuthId = e.target.id
+        const postDelAuthList = authorList.filter((author)=>{
+            if(author.authorId!=selectedAuthId){
+                return author
+            }
+        })
+        console.log("postDelAuthList----",postDelAuthList)
+        loadPostDelAuthor(postDelAuthList)
+    }
+
     return (
         <div>
             <div className="row">
@@ -116,7 +128,7 @@ const AuthorsSection = () => {
                                     <p className="card-text"><b>Biography:</b><br /> &emsp;&emsp;{author.bio}</p>
                                     <p className="card-subtitle mb-2 text-muted">Date of Birth: {author.dob}</p>
                                     <a href="#" id={author.authorId} className="card-link" onClick={editAuthor}>Edit</a>
-                                    <a href="#" className="card-link">Delete</a>
+                                    <a href="#" id={author.authorId} className="card-link" onClick={deleteAuthor}>Delete</a>
                                 </div>
                             </div>
                         )

@@ -4,7 +4,7 @@ import {LibraryContext} from './Dashboard'
 import { useContext } from "react"
 const BooksSection = () => {
     const {bookList,isBookEdit, setIsBookEdit,
-        addNewBook, updateBook
+        addNewBook, updateBook, loadPostDelBook
     } = useContext(LibraryContext)
 
     const validate = values => {
@@ -103,6 +103,18 @@ const BooksSection = () => {
         book_formik.setFieldValue("publish",selectedBook[0].publish_date)
     }
 
+    const deleteBook = (e) => {
+        console.log(e.target.id)
+        const selectedBookId = e.target.id
+        const postDelBookList = bookList.filter((book)=>{
+            if(book.bookId!=selectedBookId){
+                return book
+            }
+        })
+        console.log("postDelBookList----",postDelBookList)
+        loadPostDelBook(postDelBookList)
+    }
+
     return (
         <div>
             <div className="row">
@@ -118,7 +130,7 @@ const BooksSection = () => {
                                 <p className="card-text">ISBN# {book.isbn}</p>
                                 <p className="card-subtitle mb-2 text-muted">Publish Date: {book.publish_date}</p>
                                 <a href="#" id={book.bookId} className="card-link" onClick={editBook}>Edit</a>
-                                <a href="#" className="card-link">Delete</a>
+                                <a href="#" id={book.bookId} className="card-link" onClick={deleteBook}>Delete</a>
                             </div>
                         </div>
                     )

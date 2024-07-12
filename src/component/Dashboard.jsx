@@ -135,11 +135,19 @@ const Dashboard = () => {
         setAuthorList(editedAuthorList)
     }
 
+    const loadPostDelBook = (postDelBookList) => {
+        setBookList(postDelBookList)
+    }
+
+    const loadPostDelAuthor = (postDelAuthList) => {
+        setAuthorList(postDelAuthList)
+    }
+
     return (
         <div>
             <LibraryContext.Provider value={{bookList, authorList, isBookEdit, setIsBookEdit, isAuthEdit,setIsAuthEdit,
                 setTitle, setIsbn, setAuthor, setPublishDdate, setName, setAuthId, setDob, setBio,
-                addNewBook, addNewAuthor, updateBook, setcurrBookIndex, addNewAuthor, updateAuthor
+                addNewBook, addNewAuthor, updateBook, setcurrBookIndex, addNewAuthor, updateAuthor, loadPostDelBook, loadPostDelAuthor
             }}>
             <nav className="navbar navbar-light bg-light">
                 <div className="navbar-brand" to="#" >
