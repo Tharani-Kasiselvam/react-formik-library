@@ -2,6 +2,9 @@
 import BooksSection from "./BooksSection"
 import AuthorsSection from "./AuthorsSection"
 import { createContext, useState } from "react"
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+
 
 export const LibraryContext = createContext()
 
@@ -68,6 +71,17 @@ const Dashboard = () => {
             "bio": "Emily Nussbaum is an American television critic. She served as the television critic for The New Yorker from 2011 until 2019. In 2016, she won the Pulitzer Prize for Criticism."
         }
     ])
+
+    const toastAlerts = (message, status) => {
+        if (status == "success") {
+            toast.success(message, { position: "top-center", theme: "colored", autoClose: "500" })
+        }
+
+        else {
+            toast.error(message, { position: "top-center", theme: "colored", autoClose: "500" })
+        }
+    }
+
     const [currAuthIndex,setcurrAuthIndex] = useState(authorList.length)
 
 
@@ -82,6 +96,7 @@ const Dashboard = () => {
        }
        
        setBookList([...bookList,newBook])
+       toastAlerts("New Book ADDED successfully", "success")
        setcurrBookIndex(newBook.bookId)
     }
 
@@ -96,6 +111,7 @@ const Dashboard = () => {
        }
        
        setAuthorList([...authorList,newAuthor])
+       toastAlerts("New Author ADDED successfully", "success")
        setcurrAuthIndex(newAuthor.authorId)
     }
 
@@ -115,6 +131,7 @@ const Dashboard = () => {
         })
         console.log("---Edited Booklist---",editedBookList)
         setBookList(editedBookList)
+        toastAlerts("Book EDITED successfully", "success")
     }
 
     const updateAuthor = (values) => {
@@ -133,21 +150,24 @@ const Dashboard = () => {
         })
         console.log("---Edited AuthorList---",editedAuthorList)
         setAuthorList(editedAuthorList)
+        toastAlerts("Author EDITED successfully", "success")
     }
 
     const loadPostDelBook = (postDelBookList) => {
         setBookList(postDelBookList)
+        toastAlerts("Book DELETED successfully", "success")
     }
 
     const loadPostDelAuthor = (postDelAuthList) => {
         setAuthorList(postDelAuthList)
+        toastAlerts("Author DELETED successfully", "success")
     }
 
     return (
         <div>
             <LibraryContext.Provider value={{bookList, authorList, isBookEdit, setIsBookEdit, isAuthEdit,setIsAuthEdit,
                 setTitle, setIsbn, setAuthor, setPublishDdate, setName, setAuthId, setDob, setBio,
-                addNewBook, addNewAuthor, updateBook, setcurrBookIndex, addNewAuthor, updateAuthor, loadPostDelBook, loadPostDelAuthor
+                addNewBook, updateBook, setcurrBookIndex, addNewAuthor, updateAuthor, loadPostDelBook, loadPostDelAuthor
             }}>
             <nav className="navbar navbar-light bg-light">
                 <div className="navbar-brand" to="#" >
@@ -157,6 +177,7 @@ const Dashboard = () => {
                 </div>
             </nav>
             <div className="container-fluid">
+            <ToastContainer />
                 <BooksSection />
                 <div>
                     <hr />

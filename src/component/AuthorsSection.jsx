@@ -125,7 +125,7 @@ const AuthorsSection = () => {
                                 <div className="card-body">
                                     <h5 className="card-title">{author.name}</h5>
                                     <h6 className="card-subtitle mb-2 text-muted">ID: {author.id}</h6>
-                                    <p className="card-text"><b>Biography:</b><br /> &emsp;&emsp;{author.bio}</p>
+                                    <p className="card-text" ><b>Biography:</b><br /> &emsp;&emsp;{author.bio}</p>
                                     <p className="card-subtitle mb-2 text-muted">Date of Birth: {author.dob}</p>
                                     <a href="#" id={author.authorId} className="card-link" onClick={editAuthor}>Edit</a>
                                     <a href="#" id={author.authorId} className="card-link" onClick={deleteAuthor}>Delete</a>
