@@ -3,14 +3,16 @@ import {LibraryContext} from './Dashboard'
 import { useContext } from "react"
 
 const AuthorsSection = () => {
-    const {authorList, addNewAuthor,isAuthEdit,setIsAuthEdit} = useContext(LibraryContext)
+    const {authorList,isAuthEdit,setIsAuthEdit,
+        addNewAuthor, updateAuthor
+    } = useContext(LibraryContext)
 
     const validate = values => {
         const errors = {};
 
         //Authors error
-        if (!values.authid) {
-            errors.authid = '*Author Id is required';
+        if (!values.id) {
+            errors.id = '*Author Id is required';
         }
         if (!values.name) {
             errors.name = '*Author Name is required';
@@ -28,17 +30,27 @@ const AuthorsSection = () => {
 
     const author_formik = useFormik({
         initialValues: {
-            authid: '',
+            authorId : '',
             name: '',
+            id: '',
             dob: '',
             bio: ''
         },
         validate, // validate function
         onSubmit: values => {
             console.log(values);
-            addNewAuthor(values)
-              //Resetting to Blank values in Form
-              author_formik.resetForm()
+                if(!isAuthEdit){
+                    addNewAuthor(values)
+                    //Resetting to Blank values in Form
+                    author_formik.resetForm()
+                }
+                else{
+                    // updateAuthor
+                    setIsAuthEdit(false)
+                    updateAuthor(values)
+
+                    author_formik.resetForm()
+                }
         }
     });
 
@@ -47,14 +59,12 @@ const AuthorsSection = () => {
         fontweight: "italic"
     }
 
-    let authIndex = 0
-
     function loadAuthorButtons(){
         if(!isAuthEdit){
             return(
                 <div>
-                <button className='btn btn-success' style={{margin:"10px"}}>Add Author</button>
-                <button className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
+                <button type="submit" className='btn btn-success' style={{margin:"10px"}}>Add Author</button>
+                <button type="button" className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
                     Update Author</button>
                 </div>
             )
@@ -64,25 +74,48 @@ const AuthorsSection = () => {
                 <div>
                 <button className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
                     Add Author</button>
-                <button className='btn btn-success' style={{margin:"10px"}}>Update Author</button>
+                <button type='submit' className='btn btn-success' style={{margin:"10px"}}>Update Author</button>
                 </div>
             )
         }
+    }
+
+    const addNewAuthorButton = () => {
+        author_formik.resetForm()
+        setIsAuthEdit(false)
+    }
+
+    const editAuthor = (e) => {
+        setIsAuthEdit(true)
+        console.log(e.target.id)
+        const selectedAuthId = e.target.id
+        const selectedAuthor = authorList.filter((author)=>{
+            if(author.authorId==selectedAuthId){
+                return author
+            }
+        })
+        // console.log(selectedAuthor)
+        author_formik.setFieldValue("authorId",selectedAuthor[0].authorId)
+        author_formik.setFieldValue("name",selectedAuthor[0].name)
+        author_formik.setFieldValue("id",selectedAuthor[0].id)
+        author_formik.setFieldValue("dob",selectedAuthor[0].dob)
+        author_formik.setFieldValue("bio",selectedAuthor[0].bio)
     }
 
     return (
         <div>
             <div className="row">
                 <div className="col-md-6" style={{ height: "500px", width: "50%", overflowY:"auto"}}>
+                <button type="button" className="btn btn-primary" onClick={addNewAuthorButton}>ADD New Author</button>
                     {authorList.map(author => {
                         return (
-                            <div className="card" style={{ width: "18rem" }} key={authIndex++}>
+                            <div key={author.authorId} className="card" style={{ width: "18rem" }}>
                                 <div className="card-body">
                                     <h5 className="card-title">{author.name}</h5>
                                     <h6 className="card-subtitle mb-2 text-muted">ID: {author.id}</h6>
                                     <p className="card-text"><b>Biography:</b><br /> &emsp;&emsp;{author.bio}</p>
                                     <p className="card-subtitle mb-2 text-muted">Date of Birth: {author.dob}</p>
-                                    <a href="#" className="card-link">Edit</a>
+                                    <a href="#" id={author.authorId} className="card-link" onClick={editAuthor}>Edit</a>
                                     <a href="#" className="card-link">Delete</a>
                                 </div>
                             </div>
@@ -93,17 +126,16 @@ const AuthorsSection = () => {
                 <div className="col-md-6" style={{ width: "50%" }}>
                     AUTHOR
                     <form onSubmit={author_formik.handleSubmit} >
-                        {/* onSubmit={author_formik.handleSubmit} */}
                         <div className="form-group">
                             <label htmlFor="authid_lbl">Author ID</label>
                             <input type="text" className="form-control" placeholder="Enter Author ID"
-                                id="authid"
+                                id="id"
                                 // value={author_formik.values.authid}
                                 // onChange={author_formik.handleChange}
                                 // onBlur={author_formik.handleBlur} 
-                                {...author_formik.getFieldProps('authid')}/>
+                                {...author_formik.getFieldProps('id')}/>
                         </div>
-                        {author_formik.touched.authid && author_formik.errors.authid ? <div style={style}>{author_formik.errors.authid}</div> : null}
+                        {author_formik.touched.id && author_formik.errors.id ? <div style={style}>{author_formik.errors.id}</div> : null}
                         <br />
                         <div className="form-group">
                             <label htmlFor="name_lbl">Author Name</label>
@@ -118,7 +150,7 @@ const AuthorsSection = () => {
                         <br />
                         <div className="form-group">
                             <label htmlFor="dob_lbl">Date Of Birth</label>
-                            <input type="text" className="form-control" placeholder="Enter book ISBN num"
+                            <input type="text" className="form-control" placeholder="DD-MM-YYYY"
                                 id="dob"
                                 // value={author_formik.values.dob}
                                 // onChange={author_formik.handleChange}
@@ -138,7 +170,6 @@ const AuthorsSection = () => {
                         </div>
                         {author_formik.touched.dob && author_formik.errors.dob ? <div style={style}>{author_formik.errors.bio}</div> : null}
                         <br />
-                        {/* <button type="submit" className="btn btn-primary">Add</button> */}
                         {loadAuthorButtons()}
                     </form>
                 </div>

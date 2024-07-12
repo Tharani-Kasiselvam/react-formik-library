@@ -3,8 +3,8 @@ import { useFormik } from "formik"
 import {LibraryContext} from './Dashboard'
 import { useContext } from "react"
 const BooksSection = () => {
-    const {bookList,isBookEdit, setIsBookEdit, setTitle, setIsbn, setAuthor, setPublishDdate,
-        addNewBook
+    const {bookList,isBookEdit, setIsBookEdit,
+        addNewBook, updateBook
     } = useContext(LibraryContext)
 
     const validate = values => {
@@ -35,6 +35,7 @@ const BooksSection = () => {
 
      const book_formik = useFormik({
         initialValues: {
+          bookId: '',
           title: '',
           isbn: '',
           author: '',
@@ -43,20 +44,28 @@ const BooksSection = () => {
         validate, // validate function
         onSubmit: values => {
           console.log(values);
-        addNewBook(values)
-        //Resetting to Blank values in Form
-        book_formik.resetForm()
+            if(!isBookEdit){
+                addNewBook(values)
+                //Resetting to Blank values in Form
+                book_formik.resetForm()
+            }
+            else{
+                // updateBook
+                setIsBookEdit(false)
+                updateBook(values)
+                
+                book_formik.resetForm()
+            }
         }
       });
-
-    let bookIndex = 1;
 
     function loadBookButtons() {
     if(!isBookEdit){
         return(
             <div>
-            <button className='btn btn-success' style={{margin:"10px"}}>Add Book</button>
-            <button className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
+            <button type="submit" className='btn btn-success' style={{margin:"10px"}}>Add Book</button>
+            <button type="button" className='btn btn-success' 
+            style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
                 Update Book</button>
             </div>
         )
@@ -64,28 +73,51 @@ const BooksSection = () => {
     else{
         return(
             <div>
-            <button className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
+            <button type="button" className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
                 Add Book</button>
-            <button className='btn btn-success' style={{margin:"10px"}}>Update Book</button>
+            <button type="submit" className='btn btn-success' style={{margin:"10px"}}>Update Book</button>
             </div>
         )
     }
     }
+
+    const addNewBookButton = () => {
+        book_formik.resetForm()
+        setIsBookEdit(false)
+    }
+
+    const editBook = (e) => {
+        setIsBookEdit(true)
+        console.log(e.target.id)
+        const selectedBookId = e.target.id
+        const selectedBook = bookList.filter((book)=>{
+            if(book.bookId==selectedBookId){
+                return book
+            }
+        })
+        // console.log(selectedBook)
+        book_formik.setFieldValue("bookId",selectedBook[0].bookId)
+        book_formik.setFieldValue("title",selectedBook[0].title)
+        book_formik.setFieldValue("author",selectedBook[0].author)
+        book_formik.setFieldValue("isbn",selectedBook[0].isbn)
+        book_formik.setFieldValue("publish",selectedBook[0].publish_date)
+    }
+
     return (
         <div>
             <div className="row">
             <div className="col-md-6" style={{ height: "500px", width: "50%", overflowX: "auto" }} >
-            {/* */}
-            <div className="row" key={bookIndex++}>
+            <button type="button" className="btn btn-primary" onClick={addNewBookButton}>ADD New Book</button>
+            <div className="row">
                 {bookList.map(book => {
                     return (
-                        <div className="card" style={{ width: "18rem" }} key={book.isbn}>
+                        <div key={book.bookId} className="card" style={{ width: "18rem" }}>
                             <div className="card-body">
                                 <h5 className="card-title">{book.title}</h5>
                                 <h6 className="card-subtitle mb-2 text-muted">By {book.author}</h6>
                                 <p className="card-text">ISBN# {book.isbn}</p>
                                 <p className="card-subtitle mb-2 text-muted">Publish Date: {book.publish_date}</p>
-                                <a href="#" className="card-link">Edit</a>
+                                <a href="#" id={book.bookId} className="card-link" onClick={editBook}>Edit</a>
                                 <a href="#" className="card-link">Delete</a>
                             </div>
                         </div>
@@ -131,7 +163,7 @@ const BooksSection = () => {
                     <br />
                     <div className="form-group">
                         <label htmlFor="publish_lbl">Publish Date</label>
-                        <input type="text" className="form-control" placeholder="Enter Published date"
+                        <input type="text" className="form-control" placeholder="DD-MM-YYYY"
                             id="publish"
                             // value={book_formik.values.publish}
                             // onChange={book_formik.handleChange}
@@ -141,8 +173,6 @@ const BooksSection = () => {
                     {book_formik.touched.publish && book_formik.errors.publish ? <div style={style}>{book_formik.errors.publish}</div> : null}
                     <br />
                     {loadBookButtons()}
-                    {/* <button type="submit" className="btn btn-primary">Submit</button>&emsp;
-                    <button type="button" className="btn btn-primary" disabled={!isEdit ? true : false }>Update</button> */}
                 </form>
             </div>
             </div>
