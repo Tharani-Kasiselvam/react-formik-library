@@ -118,13 +118,14 @@ const BooksSection = () => {
 
     return (
         <div>
+        <div className="lib_sections"><h1>Book Section</h1></div>
             <div className="row">
             <div className="col-md-6" style={{ height: "500px", width: "50%", overflowX: "auto" }} >
-            <button type="button" className="btn btn-primary" onClick={addNewBookButton}>ADD New Book</button>
-            <div className="row">
+            <button type="button" className="btn btn-primary" id="lib-add-btn" onClick={addNewBookButton}>ADD New Book</button>
+            <div className="row" id="lib-card-div">
                 {bookList.map(book => {
                     return (
-                        <div key={book.bookId} className="card" style={{ width: "18rem" }}>
+                        <div key={book.bookId} className="card" id="lib_bookcard" style={{ width: "18rem" }}>
                             <div className="card-body">
                                 <h5 className="card-title">{book.title}</h5>
                                 <h6 className="card-subtitle mb-2 text-muted">By {book.author}</h6>
@@ -139,7 +140,7 @@ const BooksSection = () => {
                 }
                 </div>
             </div>
-            <div className="col-md-6" style={{ width: "50%" }}>BOOKS
+            <div className="col-md-6" id="lib_bookcol" style={{ width: "45%" }}>
                 <form onSubmit={book_formik.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="title_lbl">Book Title</label>

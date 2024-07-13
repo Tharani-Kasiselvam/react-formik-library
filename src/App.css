@@ -1,8 +1,71 @@
-#loadBooks{
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap');
+
+#lib_head{
+    font-family: "Playwrite CU", cursive;
+    /* font-optical-sizing: auto; */
+    width: 50%;
+    margin: 15px;
+    font-weight: bolder;
+    font-style: normal;
+}
+
+#navload{
+    width: 75%;
+    display: flex;
+}
+
+#lib_cont{
+    background-color: #990606e6;
+}
+
+#lib_bookcard{
+    background-color: aquamarine;
+    margin: 10px;
+}
+
+#lib_authcard{
+    background-color: #8aecef;
+}
+
+#lib_bookcol{
+    background-color: sandybrown;
+    padding: 5px;
+    /* width: 50%; */
+    margin: 5px;
+    /* margin-left: 20px; */
+}
+
+#lib_authcol{
+    background-color: sandybrown;
+    padding: 5px;
+    margin: 5px;
+}
+
+form label{
+    font-weight:bold;
+  }
+
+#lib-card-div{
+    margin: 5px;
+}
+
+/* #loadBooks{
     height: 500px;
     width: 70% ;
     overflow-y : auto;
     display: flex !important;
     flex-wrap: wrap !important;
     flex-direction: row !important;
+} */
+
+.lib_sections{
+    color: white;
+    text-align: center;
+    padding: 3px;
+    margin-left: -70px;
+}
+
+#lib-add-btn{
+    margin: 10px;
+    margin-left: 30px;
 }

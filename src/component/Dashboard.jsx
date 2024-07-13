@@ -4,7 +4,7 @@ import AuthorsSection from "./AuthorsSection"
 import { createContext, useState } from "react"
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify'
-
+import '../App.css'
 
 export const LibraryContext = createContext()
 
@@ -169,14 +169,18 @@ const Dashboard = () => {
                 setTitle, setIsbn, setAuthor, setPublishDdate, setName, setAuthId, setDob, setBio,
                 addNewBook, updateBook, setcurrBookIndex, addNewAuthor, updateAuthor, loadPostDelBook, loadPostDelAuthor
             }}>
+            
             <nav className="navbar navbar-light bg-light">
-                <div className="navbar-brand" to="#" >
+                <div className="navbar-brand" to="#" id="navload">
+                    <div>
                     <img src="../book.png"
-                        width={80} height={80} className="d-inline-block align-top" alt='books' />
-                    Library Management System
+                        width={80} height={80} className="align-top" alt='books'/>
+                        </div>
+                        <div id="lib_head">
+                    <h3>Library Management System</h3></div>
                 </div>
             </nav>
-            <div className="container-fluid">
+            <div className="container-fluid" id="lib_cont">
             <ToastContainer />
                 <BooksSection />
                 <div>
@@ -184,6 +188,7 @@ const Dashboard = () => {
                 </div>
                 <AuthorsSection />
             </div>
+        
             </LibraryContext.Provider>
         </div>
     )

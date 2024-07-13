@@ -1,6 +1,7 @@
 import { useFormik } from "formik"
 import {LibraryContext} from './Dashboard'
 import { useContext } from "react"
+import '../App.css'
 
 const AuthorsSection = () => {
     const {authorList,isAuthEdit,setIsAuthEdit,
@@ -116,12 +117,13 @@ const AuthorsSection = () => {
 
     return (
         <div>
+        <div className="lib_sections"><h1>Author Section</h1></div>
             <div className="row">
-                <div className="col-md-6" style={{ height: "500px", width: "50%", overflowY:"auto"}}>
-                <button type="button" className="btn btn-primary" onClick={addNewAuthorButton}>ADD New Author</button>
+                <div className="col-md-6" id="lib-card-div" style={{ height: "500px", width: "50%", overflowY:"auto"}}>
+                <button type="button" className="btn btn-primary" id="lib-add-btn" onClick={addNewAuthorButton}>ADD New Author</button>
                     {authorList.map(author => {
                         return (
-                            <div key={author.authorId} className="card" style={{ width: "18rem" }}>
+                            <div key={author.authorId} className="card" id="lib_authcard" style={{ width: "18rem" }}>
                                 <div className="card-body">
                                     <h5 className="card-title">{author.name}</h5>
                                     <h6 className="card-subtitle mb-2 text-muted">ID: {author.id}</h6>
@@ -135,8 +137,7 @@ const AuthorsSection = () => {
                     })
                     }
                 </div>
-                <div className="col-md-6" style={{ width: "50%" }}>
-                    AUTHOR
+                <div className="col-md-6" id="lib_authcol" style={{ width: "45%" }}>
                     <form onSubmit={author_formik.handleSubmit} >
                         <div className="form-group">
                             <label htmlFor="authid_lbl">Author ID</label>
