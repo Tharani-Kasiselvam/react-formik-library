@@ -1,10 +1,10 @@
 import { useFormik } from "formik"
-import {LibraryContext} from './Dashboard'
+import { LibraryContext } from './Dashboard'
 import { useContext } from "react"
 import '../App.css'
 
 const AuthorsSection = () => {
-    const {authorList,isAuthEdit,setIsAuthEdit,
+    const { authorList, isAuthEdit, setIsAuthEdit,
         addNewAuthor, updateAuthor, loadPostDelAuthor
     } = useContext(LibraryContext)
 
@@ -31,7 +31,7 @@ const AuthorsSection = () => {
 
     const author_formik = useFormik({
         initialValues: {
-            authorId : '',
+            authorId: '',
             name: '',
             id: '',
             dob: '',
@@ -39,19 +39,18 @@ const AuthorsSection = () => {
         },
         validate, // validate function
         onSubmit: values => {
-            console.log(values);
-                if(!isAuthEdit){
-                    addNewAuthor(values)
-                    //Resetting to Blank values in Form
-                    author_formik.resetForm()
-                }
-                else{
-                    // updateAuthor
-                    setIsAuthEdit(false)
-                    updateAuthor(values)
+            if (!isAuthEdit) {
+                addNewAuthor(values)
+                //Resetting to Blank values in Form
+                author_formik.resetForm()
+            }
+            else {
+                // updateAuthor
+                setIsAuthEdit(false)
+                updateAuthor(values)
 
-                    author_formik.resetForm()
-                }
+                author_formik.resetForm()
+            }
         }
     });
 
@@ -60,22 +59,22 @@ const AuthorsSection = () => {
         fontweight: "italic"
     }
 
-    function loadAuthorButtons(){
-        if(!isAuthEdit){
-            return(
+    function loadAuthorButtons() {
+        if (!isAuthEdit) {
+            return (
                 <div>
-                <button type="submit" className='btn btn-success' style={{margin:"10px"}}>Add Author</button>
-                <button type="button" className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
-                    Update Author</button>
+                    <button type="submit" className='btn btn-success' style={{ margin: "10px" }}>Add Author</button>
+                    <button type="button" className='btn btn-success' style={{ backgroundColor: "#0b0b0b", margin: "10px", color: "lightblue" }} disabled>
+                        Update Author</button>
                 </div>
             )
         }
-        else{
-            return(
+        else {
+            return (
                 <div>
-                <button className='btn btn-success' style={{backgroundColor: "#0b0b0b",margin:"10px", color: "lightblue"}} disabled>
-                    Add Author</button>
-                <button type='submit' className='btn btn-success' style={{margin:"10px"}}>Update Author</button>
+                    <button className='btn btn-success' style={{ backgroundColor: "#0b0b0b", margin: "10px", color: "lightblue" }} disabled>
+                        Add Author</button>
+                    <button type='submit' className='btn btn-success' style={{ margin: "10px" }}>Update Author</button>
                 </div>
             )
         }
@@ -88,39 +87,35 @@ const AuthorsSection = () => {
 
     const editAuthor = (e) => {
         setIsAuthEdit(true)
-        console.log(e.target.id)
         const selectedAuthId = e.target.id
-        const selectedAuthor = authorList.filter((author)=>{
-            if(author.authorId==selectedAuthId){
+        const selectedAuthor = authorList.filter((author) => {
+            if (author.authorId == selectedAuthId) {
                 return author
             }
         })
-        // console.log(selectedAuthor)
-        author_formik.setFieldValue("authorId",selectedAuthor[0].authorId)
-        author_formik.setFieldValue("name",selectedAuthor[0].name)
-        author_formik.setFieldValue("id",selectedAuthor[0].id)
-        author_formik.setFieldValue("dob",selectedAuthor[0].dob)
-        author_formik.setFieldValue("bio",selectedAuthor[0].bio)
+        author_formik.setFieldValue("authorId", selectedAuthor[0].authorId)
+        author_formik.setFieldValue("name", selectedAuthor[0].name)
+        author_formik.setFieldValue("id", selectedAuthor[0].id)
+        author_formik.setFieldValue("dob", selectedAuthor[0].dob)
+        author_formik.setFieldValue("bio", selectedAuthor[0].bio)
     }
 
     const deleteAuthor = (e) => {
-        console.log(e.target.id)
         const selectedAuthId = e.target.id
-        const postDelAuthList = authorList.filter((author)=>{
-            if(author.authorId!=selectedAuthId){
+        const postDelAuthList = authorList.filter((author) => {
+            if (author.authorId != selectedAuthId) {
                 return author
             }
         })
-        console.log("postDelAuthList----",postDelAuthList)
         loadPostDelAuthor(postDelAuthList)
     }
 
     return (
         <div>
-        <div className="lib_sections"><h1>Author Section</h1></div>
+            <div className="lib_sections"><h1>Author Section</h1></div>
             <div className="row">
-                <div className="col-md-6" id="lib-card-div" style={{ height: "500px", width: "50%", overflowY:"auto"}}>
-                <button type="button" className="btn btn-primary" id="lib-add-btn" onClick={addNewAuthorButton}>ADD New Author</button>
+                <div className="col-md-6" id="lib-card-div" style={{ height: "500px", width: "50%", overflowY: "auto" }}>
+                    <button type="button" className="btn btn-primary" id="lib-add-btn" onClick={addNewAuthorButton}>ADD New Author</button>
                     {authorList.map(author => {
                         return (
                             <div key={author.authorId} className="card" id="lib_authcard" style={{ width: "18rem" }}>
@@ -146,7 +141,7 @@ const AuthorsSection = () => {
                                 // value={author_formik.values.authid}
                                 // onChange={author_formik.handleChange}
                                 // onBlur={author_formik.handleBlur} 
-                                {...author_formik.getFieldProps('id')}/>
+                                {...author_formik.getFieldProps('id')} />
                         </div>
                         {author_formik.touched.id && author_formik.errors.id ? <div style={style}>{author_formik.errors.id}</div> : null}
                         <br />
@@ -179,7 +174,7 @@ const AuthorsSection = () => {
                                 // value={author_formik.values.bio}
                                 // onChange={author_formik.handleChange}
                                 // onBlur={author_formik.handleBlur} 
-                                {...author_formik.getFieldProps('bio')}/>
+                                {...author_formik.getFieldProps('bio')} />
                         </div>
                         {author_formik.touched.dob && author_formik.errors.dob ? <div style={style}>{author_formik.errors.bio}</div> : null}
                         <br />
