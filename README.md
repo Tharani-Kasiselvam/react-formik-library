@@ -1,8 +1,20 @@
-# React + Vite
+# Library Mangement System using Formik
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+***Introduction:***   
+- An Admin Page is designed to load 2 sections **Book & Author**.   
+- Each Book and Author data are loaded into a Cards with an Edit and Delete button.   
+- We have and Form section on the same page to Add/Edit Books/Authors.   
+- An additonal ADD Button is available to add New Books or Authors.   
+- **ContextAPI** provider wrapped the App component to pass the state variable across its children components.     
+- Toast from *React-Toastify* is used to pop-up messages on screen using the ToastContainer.   
+- using React Router DOM Provider, configured routing to load the Admin page.   
 
-Currently, two official plugins are available:
+***Functionality:***
+- Formik validations performed for each field.   
+- Book and Author are configured with 2 Formik and *onSubmit* handles the submission of all values.     
+&emsp; a. **resetForm()** - After adding/editing Book/Author the form will be rest.   
+&emsp; b. **getFieldProps()** - used to handle the *value*, *onChange*, *onBlur* etc.Enabled validation for on touch of respective field validation.   
+- A Flag is maintained onSubmit, either to Add or Edit the selected contents.   
+- Delete link, will remove the selected entry from the entire list.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Author : Tharani K**
